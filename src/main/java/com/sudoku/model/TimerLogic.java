@@ -1,53 +1,52 @@
 package com.sudoku.model;
 
-import com.sudoku.controller.GameController;
 import javax.swing.Timer;
 import java.awt.event.ActionListener;
 
 public class TimerLogic {
-    private final Timer timer;
+    private Timer timer;
     private int seconds;
-    private final GameController controller;
-    
-    public TimerLogic(GameController controller) {
-        this.controller = controller;
+    private final ActionListener timerListener;
+
+    public TimerLogic(ActionListener timerListener) {
         this.seconds = 0;
-        
-        ActionListener timerAction = e -> {
-            seconds++;
-            updateDisplay();
-        };
-        
-        this.timer = new Timer(1000, timerAction);
+        this.timerListener = timerListener;
+        initTimer();
     }
-    
+
+    private void initTimer() {
+        timer = new Timer(1000, e -> {
+            seconds++;
+            timerListener.actionPerformed(e);
+        });
+    }
+
     public void start() {
         timer.start();
     }
-    
+
     public void stop() {
         timer.stop();
     }
-    
+
     public void reset() {
         timer.stop();
         seconds = 0;
-        updateDisplay();
+        timerListener.actionPerformed(null);
     }
-    
-    private void updateDisplay() {
+
+    public String getFormattedTime() {
         int minutes = seconds / 60;
-        int secs = seconds % 60;
-        String time = String.format("%02d:%02d", minutes, secs);
-        controller.updateTimer(time);
+        int remainingSeconds = seconds % 60;
+        return String.format("%02d:%02d", minutes, remainingSeconds);
     }
-    
-    public int getElapsedTime() {
+
+    public int getElapsedSeconds() {
         return seconds;
     }
-    
-    public void setElapsedTime(int elapsedTime) {
-        this.seconds = elapsedTime;
-        updateDisplay();
+
+    public void setElapsedSeconds(int seconds) {
+        this.seconds = seconds;
+        timerListener.actionPerformed(null);
     }
 } 

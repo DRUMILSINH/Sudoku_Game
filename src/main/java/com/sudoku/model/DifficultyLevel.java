@@ -1,17 +1,17 @@
 package com.sudoku.model;
 
 public enum DifficultyLevel {
-    EASY(0.3),
-    MEDIUM(0.5),
-    HARD(0.7);
+    EASY(40),
+    MEDIUM(30),
+    HARD(25);
     
-    private final double removalRate;
+    private final int initialCells;
     
-    DifficultyLevel(double removalRate) {
-        this.removalRate = removalRate;
+    DifficultyLevel(int initialCells) {
+        this.initialCells = initialCells;
     }
     
-    public double getRemovalRate() {
-        return removalRate;
+    public int getInitialCells() {
+        return initialCells;
     }
 } 
