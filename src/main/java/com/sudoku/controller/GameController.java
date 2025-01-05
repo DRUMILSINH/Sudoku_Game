@@ -21,11 +21,14 @@ public class GameController {
         this.difficulty = DifficultyLevel.EASY;
         this.undoStack = new Stack<>();
         this.redoStack = new Stack<>();
-        this.timer = new TimerLogic(e -> {
-            if (gui != null) {
-                gui.updateTimer(timer.getFormattedTime());
-            }
-        });
+        TimerLogic tempTimer = new TimerLogic(e -> updateTimerDisplay());
+        this.timer = tempTimer;
+    }
+
+    private void updateTimerDisplay() {
+        if (gui != null) {
+            gui.updateTimer(timer.getFormattedTime());
+        }
     }
 
     public void setGUI(SudokuGUI gui) {
