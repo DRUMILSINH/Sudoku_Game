@@ -1,6 +1,6 @@
-package utils;
+package com.sudoku.utils;
 
-import model.GameState;
+import com.sudoku.model.GameState;
 import java.io.*;
 import java.nio.file.*;
 import java.util.Optional;
@@ -19,12 +19,13 @@ public class FileHandler {
     }
     
     public static Optional<GameState> loadGame() {
-        if (!Files.exists(Paths.get(SAVE_FILE))) {
+        Path path = Paths.get(SAVE_FILE);
+        if (!Files.exists(path)) {
             return Optional.empty();
         }
         
         try (ObjectInputStream ois = new ObjectInputStream(
-                new BufferedInputStream(Files.newInputStream(Paths.get(SAVE_FILE))))) {
+                new BufferedInputStream(Files.newInputStream(path)))) {
             return Optional.of((GameState) ois.readObject());
         } catch (IOException | ClassNotFoundException e) {
             Logger.error("Failed to load game", e);

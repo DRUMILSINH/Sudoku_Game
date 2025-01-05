@@ -1,4 +1,4 @@
-package model;
+package com.sudoku.model;
 
 public enum DifficultyLevel {
     EASY(0.3),

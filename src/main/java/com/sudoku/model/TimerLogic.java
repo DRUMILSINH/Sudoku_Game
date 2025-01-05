@@ -1,6 +1,6 @@
-package model;
+package com.sudoku.model;
 
-import controller.GameController;
+import com.sudoku.controller.GameController;
 import javax.swing.Timer;
 import java.awt.event.ActionListener;
 
@@ -44,5 +44,10 @@ public class TimerLogic {
     
     public int getElapsedTime() {
         return seconds;
+    }
+    
+    public void setElapsedTime(int elapsedTime) {
+        this.seconds = elapsedTime;
+        updateDisplay();
     }
 } 

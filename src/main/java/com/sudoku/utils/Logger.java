@@ -1,4 +1,4 @@
-package utils;
+package com.sudoku.utils;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ public class Logger {
         }
     }
     
-    public static void log(String level, String message) {
+    public static synchronized void log(String level, String message) {
         String timestamp = LocalDateTime.now().format(formatter);
         String logMessage = String.format("[%s] %s: %s", timestamp, level, message);
         System.out.println(logMessage);

@@ -1,4 +1,4 @@
-package model;
+package com.sudoku.model;
 
 import java.util.List;
 
@@ -17,9 +17,16 @@ public class Hint {
     public int getCol() { return col; }
     public List<Integer> getValidNumbers() { return validNumbers; }
     
+    @Override
     public String toString() {
-        return String.format("Try %s in position (%d,%d)", 
-            validNumbers.size() == 1 ? validNumbers.get(0) : 
-                "one of " + validNumbers, row + 1, col + 1);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Try ");
+        if (validNumbers.size() == 1) {
+            sb.append(validNumbers.get(0));
+        } else {
+            sb.append("one of ").append(validNumbers);
+        }
+        sb.append(" in position (").append(row + 1).append(",").append(col + 1).append(")");
+        return sb.toString();
     }
 } 
