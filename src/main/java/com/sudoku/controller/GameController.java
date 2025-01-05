@@ -19,13 +19,13 @@ public class GameController {
     public GameController() {
         this.grid = new SudokuGrid(9);
         this.difficulty = DifficultyLevel.EASY;
+        this.undoStack = new Stack<>();
+        this.redoStack = new Stack<>();
         this.timer = new TimerLogic(e -> {
             if (gui != null) {
                 gui.updateTimer(timer.getFormattedTime());
             }
         });
-        this.undoStack = new Stack<>();
-        this.redoStack = new Stack<>();
     }
 
     public void setGUI(SudokuGUI gui) {
