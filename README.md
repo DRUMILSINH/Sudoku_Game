@@ -129,3 +129,111 @@ sudoku-game/
 - **Persistence**: File-based serialization
 - **Java Version**: JDK 11+
 
+# Data Structures and Algorithms
+
+## 1. Data Structures Used
+
+### 1.1 Two-Dimensional Arrays
+- Used for representing the Sudoku grid (`int[][] grid`)
+- Used for tracking original cells (`boolean[][] originalCells`)
+- Efficient access and modification with O(1) time complexity
+- Memory efficient for fixed-size 9x9 grid
+
+### 1.2 Stack
+- Used for Undo/Redo functionality (`Stack<GameState>`)
+- Maintains game state history
+- LIFO (Last In, First Out) operations
+- O(1) time complexity for push and pop operations
+
+### 1.3 ArrayList
+- Used in hint system for storing valid numbers
+- Dynamic sizing for varying number of possibilities
+- O(1) time complexity for add and get operations
+
+### 1.4 Optional
+- Used for safe handling of hints and loaded games
+- Prevents null pointer exceptions
+- Functional programming approach
+
+## 2. Algorithms
+
+### 2.1 Puzzle Generation
+```java
+// Backtracking algorithm for generating valid Sudoku puzzles
+private boolean generateSolution(int row, int col) {
+    if (col >= size) {
+        row++;
+        col = 0;
+    }
+    if (row >= size) {
+        return true;
+    }
+
+    List<Integer> numbers = getShuffledNumbers();
+    for (int num : numbers) {
+        if (isValidMove(row, col, num)) {
+            grid[row][col] = num;
+            if (generateSolution(row, col + 1)) {
+                return true;
+            }
+            grid[row][col] = 0;
+        }
+    }
+    return false;
+}
+```
+
+### 2.2 Move Validation
+- Row checking: O(n) time complexity
+- Column checking: O(n) time complexity
+- Subgrid checking: O(√n × √n) time complexity
+- Combined validation ensures puzzle rules are maintained
+
+### 2.3 Hint System
+- Finds empty cells
+- Calculates valid numbers for each cell
+- Uses constraint satisfaction to suggest moves
+- Prioritizes cells with fewer possibilities
+
+### 2.4 Win Condition Checking
+- Verifies grid completeness
+- Validates all rows, columns, and subgrids
+- O(n²) time complexity for full grid validation
+
+## 3. Design Patterns
+
+### 3.1 Model-View-Controller (MVC)
+- **Model**: `SudokuGrid`, `GameState`, etc.
+- **View**: `SudokuGUI`, `GridPanel`
+- **Controller**: `GameController`
+- Separates concerns and improves maintainability
+
+### 3.2 Observer Pattern
+- Used in timer implementation
+- GUI updates automatically when timer changes
+- Loose coupling between components
+
+### 3.3 State Pattern
+- Manages game state transitions
+- Handles save/load functionality
+- Maintains undo/redo history
+
+## 4. Performance Considerations
+
+### 4.1 Time Complexity
+- Grid Operations: O(1) for access and modification
+- Validation: O(n) for each move
+- Puzzle Generation: O(n³) worst case
+- Hint Generation: O(n²) worst case
+
+### 4.2 Space Complexity
+- Grid Storage: O(n²)
+- Game State: O(n²)
+- Undo/Redo Stacks: O(m × n²) where m is number of moves
+
+### 4.3 Optimizations
+- Efficient array access
+- Minimal object creation
+- Cached validations where possible
+- Memory-efficient state storage
+
